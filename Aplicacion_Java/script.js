@@ -3,13 +3,18 @@ const tablero = [];
 
 
 const btnPulsado = (e, pos) =>{
-    turno ++;
+    if (tablero[pos]) return;
     const btn = e.target;
-    const color = turno % 2 ? "salmon" : "paleGreen"
-    btn.style.backgroundColor = color;
-    tablero[pos] = color;
-    if(haGanado())alert('Enhorabuena player ' + color)
+    const jugador = turno % 2 === 0 ? "X" : "O"
+    btn.textContent = jugador;
+    tablero[pos] = jugador;
+    if(haGanado()) { alert('Enhorabuena player' + jugador);
+    return;
 }
+
+    turno++;
+};
+
 
 const haGanado = () =>{
     if(tablero[0] == tablero [1] && tablero[0] == tablero[2] && tablero[0]){
@@ -32,6 +37,15 @@ const haGanado = () =>{
     return false
 }
 
+//Dashboard
+document.querySelectorAll('.container button').forEach(
+    (obj, i) => obj.addEventListener('click', (e) => btnPulsado(e, i))
+);
 
-document.querySelectorAll('button').forEach(
-    (obj, i)  => obj.addEventListener('click', (e) =>btnPulsado(e,i)));
+//Reset Button
+const btnReiniciar = document.getElementById('reiniciar');
+btnReiniciar.addEventListener('click', () => {
+    tablero.fill(null);
+    document.querySelectorAll('.container button').forEach(b => b.textContent = "");
+    turno = 0;
+});

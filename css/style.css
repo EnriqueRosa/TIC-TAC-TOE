@@ -14,10 +14,11 @@ body {
     padding: 20px;
 }
 
-
-.container button{
+.container button {
     width: 200px;
     height: 200px;
+    font-size: 96px;       
+    font-weight: bold;
 }
 
 .container{
@@ -25,4 +26,19 @@ body {
     grid-template-columns: repeat(3, 1fr);
     width: 600px;
     margin-top: 40px;
+}
+
+.controls {
+    margin-top: 30px;
+}
+
+#reiniciar {
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #8052ec;
+    cursor: pointer;
 }

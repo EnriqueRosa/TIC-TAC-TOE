@@ -1,34 +1,34 @@
-// Contador de turnos y estado del juego
+// Shift counter and game status
 let turno = 0;
 let juegoTerminado = false;
 
-// Array que representa el tablero (9 casillas)
+// Array representing the board (9 squares)
 const tablero = Array(9).fill(null);
 
-
-// Función que se ejecuta cuando pulsamos un botón/casilla
+// Function executed when clicking a box
 const btnPulsado = (e, pos) => {
 
-// Si la casilla ya está ocupada o el juego terminó, no hacemos nada
+// If it is occupied or the game is over, it does nothing
     if (tablero[pos] || juegoTerminado) return;
 
     const btn = e.target;
-// Determinamos el jugador actual (X o O)
+
+// We determine the current player (X or O).
     const jugador = turno % 2 === 0 ? "X" : "O";
 
-// Mostramos la X o O en la casilla y guardamos en el array
+// We display the X or O and save it in the array.
     btn.textContent = jugador;
     tablero[pos] = jugador;
 
-// Comprobamos si alguien ha ganado
-
+// We check if anyone has won.
+    
     if (haGanado()) {
         alert('Enhorabuena jugador ' + jugador);
         juegoTerminado = true;
         return;
     }
 
-// Si se han llenado todas las casillas y nadie ganó → empate
+// Si se han llenado todas las casillas y nadie ganó 
 
     if (turno === 8) {
         alert('Empate');
@@ -36,15 +36,15 @@ const btnPulsado = (e, pos) => {
         return;
     }
 
-// Pasamos al siguiente turno
+// We move on to the next round.
 
     turno++;
 };
 
-// Función que comprueba si hay un ganador
+// Function that checks if there is a winner
 const haGanado = () => {
 
-// Comprobamos todas las posibles líneas ganadoras
+// We check all possible winning lines
 
     if (tablero[0] == tablero[1] && tablero[0] == tablero[2] && tablero[0]) return true;
     if (tablero[3] == tablero[4] && tablero[3] == tablero[5] && tablero[3]) return true;
@@ -57,7 +57,7 @@ const haGanado = () => {
     return false;
 };
 
-// Dashboard asignamos la función a todos los botones del tablero
+// Assign the function to the buttons on the board
 document.querySelectorAll('.container button').forEach(
     (obj, i) => obj.addEventListener('click', (e) => btnPulsado(e, i))
 );

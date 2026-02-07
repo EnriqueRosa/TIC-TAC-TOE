@@ -1,71 +1,68 @@
-// Shift counter and game status
-let turno = 0;
-let juegoTerminado = false;
+// Turn counter and game status
+let turn = 0;
+let gameOver = false;
 
 // Array representing the board (9 squares)
-const tablero = Array(9).fill(null);
+const board = Array(9).fill(null);
 
 // Function executed when clicking a box
-const btnPulsado = (e, pos) => {
+const buttonPressed = (e, pos) => {
 
-// If it is occupied or the game is over, it does nothing
-    if (tablero[pos] || juegoTerminado) return;
+    // If it is occupied or the game is over, do nothing
+    if (board[pos] || gameOver) return;
 
     const btn = e.target;
 
-// We determine the current player (X or O).
-    const jugador = turno % 2 === 0 ? "X" : "O";
+    // Determine the current player (X or O)
+    const player = turn % 2 === 0 ? "X" : "O";
 
-// We display the X or O and save it in the array.
-    btn.textContent = jugador;
-    tablero[pos] = jugador;
+    // Display the X or O and save it in the array
+    btn.textContent = player;
+    board[pos] = player;
 
-// We check if anyone has won.
-    
-    if (haGanado()) {
-        alert('Enhorabuena jugador ' + jugador);
-        juegoTerminado = true;
+    // Check if anyone has won
+    if (hasWon()) {
+        alert('Congratulations player ' + player);
+        gameOver = true;
         return;
     }
 
-// Si se han llenado todas las casillas y nadie ganó 
-
-    if (turno === 8) {
-        alert('Empate');
-        juegoTerminado = true;
+    // If all squares are filled and nobody won
+    if (turn === 8) {
+        alert('Draw');
+        gameOver = true;
         return;
     }
 
-// We move on to the next round.
-
-    turno++;
+    // Move on to the next turn
+    turn++;
 };
 
 // Function that checks if there is a winner
-const haGanado = () => {
+const hasWon = () => {
 
-// We check all possible winning lines
-
-    if (tablero[0] == tablero[1] && tablero[0] == tablero[2] && tablero[0]) return true;
-    if (tablero[3] == tablero[4] && tablero[3] == tablero[5] && tablero[3]) return true;
-    if (tablero[6] == tablero[7] && tablero[6] == tablero[8] && tablero[6]) return true;
-    if (tablero[0] == tablero[3] && tablero[0] == tablero[6] && tablero[0]) return true;
-    if (tablero[1] == tablero[4] && tablero[1] == tablero[7] && tablero[1]) return true;
-    if (tablero[2] == tablero[5] && tablero[2] == tablero[8] && tablero[2]) return true;
-    if (tablero[0] == tablero[4] && tablero[0] == tablero[8] && tablero[0]) return true;
-    if (tablero[2] == tablero[4] && tablero[2] == tablero[6] && tablero[2]) return true;
+    // Check all possible winning lines
+    if (board[0] == board[1] && board[0] == board[2] && board[0]) return true;
+    if (board[3] == board[4] && board[3] == board[5] && board[3]) return true;
+    if (board[6] == board[7] && board[6] == board[8] && board[6]) return true;
+    if (board[0] == board[3] && board[0] == board[6] && board[0]) return true;
+    if (board[1] == board[4] && board[1] == board[7] && board[1]) return true;
+    if (board[2] == board[5] && board[2] == board[8] && board[2]) return true;
+    if (board[0] == board[4] && board[0] == board[8] && board[0]) return true;
+    if (board[2] == board[4] && board[2] == board[6] && board[2]) return true;
     return false;
 };
 
 // Assign the function to the buttons on the board
 document.querySelectorAll('.container button').forEach(
-    (obj, i) => obj.addEventListener('click', (e) => btnPulsado(e, i))
+    (obj, i) => obj.addEventListener('click', (e) => buttonPressed(e, i))
 );
 
 // Reset
-document.getElementById('reiniciar').addEventListener('click', () => {
-    tablero.fill(null); 
+document.getElementById('reset').addEventListener('click', () => {
+    board.fill(null); 
     document.querySelectorAll('.container button').forEach(b => b.textContent = "");
-    turno = 0;
-    juegoTerminado = false;
+    turn = 0;
+    gameOver = false;
 });
+
